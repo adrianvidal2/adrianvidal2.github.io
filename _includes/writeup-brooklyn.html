@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/assets/favicon/apple-touch-icon.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/assets/favicon/favicon-32x32.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/favicon/favicon-16x16.png" | prepend: site.baseurl }}">
+  <link rel="manifest" href="{{ "/assets/favicon/site.webmanifest" | prepend: site.baseurl }}">
+
+  <link rel="stylesheet" href="{{ "/assets/css/main.min.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "/assets/css/vendors.min.css" | prepend: site.baseurl }}">
+
+  <script src="{{ "/assets/js/vendors.min.js" | prepend: site.baseurl }}"></script>
+  <script src="{{ "/assets/js/app.min.js" | prepend: site.baseurl }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.10.3/dist/showdown.min.js"></script>
+  
+
+</head>
+
+<body>
+  <div id ="layout" class="layout">
+    <md># Escaneo</md>
+    <md>## NMAP</md>
+    <md>El primer paso a llevar a cabo, es el de realizar un análisis que permite
+        conocer los puertos abiertos que se encuentran en la máquina objetivo. Para
+        lograr esto, se utiliza la herramiento nmap y en este caso, empleando el siguiente
+        comando se consiguen los puertos abiertos que se pueden ver en la figura [1](../assets/img/brooklyn/1allPorts.png "Puertos abiertos").</md>
+
+        <md>```
+          nmap -p- --open --min-rate 5000 -sS -n -Pn <IP> -oN allPorts
+          ```</md>
+
+          <md>- -p-: escaneo de todos los puertos.</md>
+          <md>- –open: se muestran los puertos abiertos exclusivamente.</md>
+          <md>- –min-rate: tasa de envı́o de paquetes.</md>
+          <md>- -sS: Opción por defecto, escaneo rápido.</md>
+          <md>- -n: no se aplica resolución DNS.</md>
+          <md>- -Pn: se evita el descubrimiento de hosts.</md>
+      
+        <div class = img-github>
+          <md>![Puertos abiertos | center](../assets/img/brooklyn/1allPorts.png )</md>
+        </div>
+
+        <md>Una vez se conocen los puertos abiertos (servicios _ftp_, _ssh_ y _http_), se continúa
+          realizando un análisis para obtener las versiones de los servicios que en estos
+          corren. Para lograr este objetivo se utiliza el siguiente comando, obtiendo los
+          resultados que se pueden apreciar en la figura [2](../assets/img/brooklyn/2VersionPorts.png "Versiones de los puertos abiertos").</md>
+
+          <md>```
+            nmap -p21,22,80 -sCV <IP> -oN versionPorts
+            ```</md>
+
+          <div class = img-github>
+            <md>![Versiones de los puertos abiertos | center](../assets/img/brooklyn/2VersionPorts.png )</md>
+          </div>
+
+          <md>A la vista de los resultados, el servicio _ftp_ permite una conexión sin autenticación, esto es, como usuario _anonymous_. Por otro lado, el servicio _ssh_ se
+            encuentra en una versión desactualizada sobre la cual se podrı́a realizar una
+            enumeración de usuarios. Finalmente, el último servicio corre bajo un Apache
+            en la versión 2.4.29.
+            Llegado este punto, el proceso de escaneo estarı́a finalizado, por lo que se
+            pasa al reconocimiento de los servicios.</md>
+
+            <md># Reconocimiento</md>
+            <md>## Servicio FTP</md>
+            <md>El primer servicio a analizar es el servicio que corre en el puerto 21. Como se
+              ha visto en la sección de escaneo, es posible acceder al servicio de transferencia
+              de archivos sin ningún tipo de autenticación (figura [3](../assets/img/brooklyn/ftp.png "Servicio FTP")).</md>
+
+              <div class = img-github>
+                <md>![Servicio FTP | center](../assets/img/brooklyn/ftp.png )</md>
+              </div>
+
+              <md>Una vez se accede a dicho servicio, el siguiente paso será listar los archivos
+                que pueda haber en el directorio. Al realizar dicha acción, aparece en este directorio un documento de texto denominado como _note_ to _jake.txt_ (figura [4](../assets/img/brooklyn/note.png "Note to Jake")), por
+                lo que el siguiente paso será realizar la recuperación a la máquina local para
+                poder visualizarla.</md>
+
+                <div class = img-github>
+                  <md>![Note to Jake | center](../assets/img/brooklyn/note.png )</md>
+                </div>
+
+
+                <md>El contenido de la nota permite encontrar una posible vı́a de vulnerabilidad
+de la máquina, pues en esta, Amy le escribe a Jake que modifique su contraseña,
+ya que la actual es débil (figura [5](../assets/img/brooklyn/jakePwd.png "Jake pwd")). Esta nota posibilita la vı́a de realizar un
+ataque de fuerza bruta con el usuario de _jake_.
+                </md>
+  
+                <div class = img-github>
+                  <md>![Jake pwd | center](../assets/img/brooklyn/jakePwd.png )</md>
+                </div>
+
+                <md>Una vez se realizado el análisis de este puerto, se efectua la investigación del
+                  servicio _http_.</md>
+
+                  <md>## Servicio HTTP</md>
+                  <md>Al abrir en el navegador la dirección asociada a la máquina virtual bajo el
+                    servicio _http_, la página que se muestra es la siguiente (figura [6](../assets/img/brooklyn/web.png "Página principal")).</md>
+
+                    <div class = img-github>
+                      <md>![Página principal | center](../assets/img/brooklyn/web.png )</md>
+                    </div>
+
+                    <md>Al realizar un análisis del código fuente de la página para comprobar que no
+                      haya ningún tipo de comentario o función que no sea visible, se encuentra un
+                      mensaje en el que se pregunta “¿Has oı́do hablar de la esteganografı́a?” (figura
+                      [7](../assets/img/brooklyn/estego.png "Código fuente")).</md>
+
+                      <div class = img-github>
+                        <md>![Código fuente | center](../assets/img/brooklyn/estego.png )</md>
+                      </div>
+
+
+                      <md>Este mensaje permite saber que existe una imagen que contiene información oculta, y hasta el momento solo se ha podido localizar una imagen en este
+                        servicio. Por lo tanto, antes de examinar la página web en busca de directorios o ficheros ocultos, se procede a la descarga de la imagen principal para su
+                        investigación.
+                        Para realizar el examen sobre la fotografı́a, se utilizan las herramientas _stegcracker_ y _steghide_. Estas herramientas permitirán conocer la contraseña empleada para ocultar la información dentro de la imagen, y la recuperación de la
+misma.
+Para utilizar la herramienta _stegcracker_ han sido aplicadas las opciones por
+defecto, esto es, el diccionario empleado será el famoso _rockyou_. La ejecución de
+la herramienta revela la contraseña empleada en la ocultación de información,
+que en este caso será _admin_ (figura [8](../assets/img/brooklyn/stegcracker.png "Stegcracker")).
+                      </md>
+
+                      <div class = img-github>
+                        <md>![Stegcracker | center](../assets/img/brooklyn/stegcracker.png )</md>
+                      </div>
+
+                      <md>A continuación, al ejecutar la herramienta _steghide_ se introduce la contraseña
+                        obtenida y se recupera un documento de texto _note.txt_ (figura [9](../assets/img/brooklyn/steghide.png "Steghide")).</md>
+
+                        <div class = img-github>
+                          <md>![Steghide | center](../assets/img/brooklyn/steghide.png )</md>
+                        </div>
+
+                        <md>El contenido del documento revela la contraseña del capitán Holt en texto
+                          plano ([10](../assets/img/brooklyn/holtPwd.png "Holt pwd")).</md>
+
+                          <div class = img-github>
+                            <md>![Holt pwd | center](../assets/img/brooklyn/holtPwd.png )</md>
+                          </div>
+
+                          <md>Este descubrimiento permite realizar un análisis del servicio _ssh_, pues a estas
+                            alturas de la investigación se poseen dos usuarios (_jake_ y _holt_) y una contraseña.</md>
+
+                            <md>## Servicio SSH</md>
+                            <md>Para este servicio se podrı́a realizar un ataque de enumeración de usuarios,
+                              que permitirı́a comprobar si en la máquina existe alguno de los usuarios anteriormente mencionados. En este caso dicha prueba no es realizada, pero se realiza
+                              un intento de conexión entre la máquina local y el servidor remoto utilizando el
+                              usuario _holt_, obtiendo una prueba exitosa (figura [11](../assets/img/brooklyn/ssh.png "Conexión SSH")).</md>
+
+                              <div class = img-github>
+                                <md>![Conexión SSH | center](../assets/img/brooklyn/ssh.png )</md>
+                              </div>
+
+                              <md>Una vez dentro del servidor remoto, se obtiene la _flag_ de usuario, accesible
+                                desde el directorio _/home_ del capitán Holt (figura [12](../assets/img/brooklyn/user.png "User Flag")).</md>
+
+                                <div class = img-github>
+                                  <md>![User Flag | center](../assets/img/brooklyn/user.png )</md>
+                                </div>
+
+                                <md>El siguiente paso será la explotación para lograr una escalada de privilegios.</md>
+
+                                <md># Explotación</md>
+                                <md>En este punto de la investigación se tiene acceso al servidor remoto como
+                                  un usuario. A continuación, se necesita conseguir el archivo asociado a la _flag_
+                                  del superusuario, por lo que será necesario realizar una escalada de privilegios.
+                                  En esta sección se muestran los pasos seguidos para conseguir acceso al servidor
+                                  remoto como usuario _root_.
+                                  El primer paso realizado ha sido la comprobación de permisos con los que
+                                  cuenta el usuario _holt_ (figura [13](../assets/img/brooklyn/permisos.png "Permisos del usuario")).</md>
+
+                                  <md>```
+                                    sudo -l
+                                    ```
+                                  </md>
+
+                                  <div class = img-github>
+                                    <md>![Permisos del usuario | center](../assets/img/brooklyn/permisos.png )</md>
+                                  </div>
+
+                                  <md>El usuario cuenta con permisos de ejecución como superusuario del comando
+                                    nano. Para comprender como realizar una escalada de privilegios a través del
+                                    uso de este editor de texto, se utiliza el recurso provisto por [GTFOBins](https://gtfobins.github.io/) (figura
+                                    [14](../assets/img/brooklyn/gtfobins.png "Permisos del usuario")).</md>
+
+                                    <div class = img-github>
+                                      <md>![Nano, escalada de privilegios | center](../assets/img/brooklyn/gtfobins.png )</md>
+                                    </div>
+
+                                    <md>## Escalada de privilegios</md>
+                                    <md>Para realizar la escalada de privilegios, se siguen los pasos mostrados en la
+                                      figura [14](../assets/img/brooklyn/gtfobins.png "Permisos del usuario") (figura [15](../assets/img/brooklyn/root.png "Escalada de privilegios")).</md>
+                                      
+                                      <div class = img-github>
+                                        <md>![Escalada de privilegios | center](../assets/img/brooklyn/root.png )</md>
+                                      </div>
+
+                                      <md>Una vez ejecutado el comando, se accede al servidor como superusuario (figura [16](../assets/img/brooklyn/whoami.png "Escalada de whoami")). Finalmente, se consigue obtener la _flag_ asociado a este, dejando la
+                                        máquina como vulnerada y acabada (figura [17](../assets/img/brooklyn/rootF.png "Flag de root")).</md>
+                                        
+                                        <div class = img-github>
+                                          <md>![whoami | center](../assets/img/brooklyn/whoami.png )</md>
+                                        </div>
+                                        <div class = img-github>
+                                          <md>![Flag de root | center](../assets/img/brooklyn/rootF.png )</md>
+                                        </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
+</body>
+</html>

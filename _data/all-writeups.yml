@@ -1,0 +1,43 @@
+- name: 0 day
+  difficulty: Medium
+  description: This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box.
+  logo: turtle.png
+  template_name: 0day
+  tags:
+    - tag: CVE
+    - tag: kernel exploit
+    - tag: shell shock
+    - tag: 0day
+  web: thm
+
+- name: Brooklyn Nine Nine
+  difficulty: Easy
+  description: This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box.
+  logo: brooklyn.png
+  template_name: brooklynNineNine
+  tags:
+    - tag: security
+    - tag: nmap
+    - tag: gobuster
+    - tag: pentest
+  web: thm
+
+- name: Tech_Supp0rt:1
+  difficulty: Easy
+  description: Hack into the scammer's under-development website to foil their plans.
+  logo: techLogo.png
+  template_name: techSupport
+  tags:
+    - tag: RCE
+    - tag: file upload
+    - tag: sudo
+    - tag: custom
+  web: thm
+
+- name: Bashed
+  difficulty: Easy
+  logo: bashedLogo.png
+  template_name: bashed
+  OS: Linux
+  web: htb
+

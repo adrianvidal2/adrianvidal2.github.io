@@ -1,0 +1,32 @@
+# > name: Name of your certification
+# > ca: certificate issuer
+# > ca-url: web of ca
+# > date: date of expedition
+
+- name: Degree in Computer Engineering
+  ca: Universidade de Santiago de Compostela
+  ca-url: https://www.usc.gal/es
+  date: Sep 2019
+  date-finish: July 2023
+  logo: usc.png
+
+- name: Degree in Computer Engineering
+  ca: Universidad Nacional de Educación a Distancia
+  ca-url: https://www.uned.es/universidad/inicio.html
+  date: Sep 2018
+  date-finish: June 2019
+  logo: unedLogo.png
+
+- name: Remote Pilot Certificate (A1, A2, A3)
+  ca: Agencia Estatal de Seguridad Aérea
+  ca-url: https://www.seguridadaerea.gob.es/
+  date: June 2022
+  date-finish: 
+  logo: aesaLogo.png
+
+- name: B1 Preliminary
+  ca: Cambridge University
+  ca-url:
+  date: June 2019
+  date-finish:
+  logo: cambridgeLogo.png

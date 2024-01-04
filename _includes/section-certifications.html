@@ -1,0 +1,20 @@
+<h1 class="title">{{site.certification_title}}</h1>
+{% for event in site.data.certifications %}
+    <div class="certification-box" data-aos="zoom-in">
+        <a href="{{event.ca-url}}">
+            <img src="/assets/img/logos-certifications/{{event.logo}}">
+        </a>
+        <div class="content">
+            <span class="certification_title">{{event.name}}</span>
+            <a href="{{event.ca-url}}">
+                <span class="ca">{{event.ca}}</span>
+            </a>
+        </div>
+
+        {% if event.date-finish %} 
+            <span class="certification-date">{{event.date}} - {{event.date-finish}}</span>
+        {% else %}
+            <span class="certification-date">{{event.date}}</span>
+        {% endif %}
+    </div>
+{% endfor %}

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/assets/favicon/apple-touch-icon.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/assets/favicon/favicon-32x32.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/favicon/favicon-16x16.png" | prepend: site.baseurl }}">
+  <link rel="manifest" href="{{ "/assets/favicon/site.webmanifest" | prepend: site.baseurl }}">
+
+  <link rel="stylesheet" href="{{ "/assets/css/main.min.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "/assets/css/vendors.min.css" | prepend: site.baseurl }}">
+
+  <script src="{{ "/assets/js/vendors.min.js" | prepend: site.baseurl }}"></script>
+  <script src="{{ "/assets/js/app.min.js" | prepend: site.baseurl }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.10.3/dist/showdown.min.js"></script>
+  
+
+</head>
+
+<body>
+  <div id ="layout" class="layout">
+    
+    <md>## Escaneo</md>
+    <md>### Ping</md>
+    <md>En primer lugar se ejecuta el comando _ping_ para lograr conocer el sistema
+      operativo de la máquina objetivo. En este caso como se puede ver en la imagen
+      [1](../assets/img/techSupport/0ping.png "_Ping_  a máquina objetivo"), la máquina vı́ctima cuenta con un TTL de 63, siendo este el utilizado por las
+      máquinas que cuentan con un sistema operativo UNIX.</md>
+      <div class = img-github>
+        <md>![señal a máquina objetivo | center](../assets/img/techSupport/0ping.png)</md>
+      </div>
+
+      <md>### NMAP</md>
+      <md>El siguiente paso será realizar un reconocimiento para localizar los puertos abiertos de la máquina. A través del empleo de la herramienta nmap y el
+        siguiente comando, se obtienen los puertos visibles en la fotografı́a [2](../assets/img/techSupport/1allPortos.png ).</md>
+
+        <md>```
+          nmap -p- --open --min-rate 5000 -sS -n -Pn <IP> -oN allPorts
+          ```</md>
+
+          <md>- -p-: escaneo de todos los puertos.</md>
+          <md>- –open: se muestran los puertos abiertos exclusivamente.</md>
+          <md>- –min-rate: tasa de envı́o de paquetes.</md>
+          <md>- -sS: Opción por defecto, escaneo rápido.</md>
+          <md>- -n: no se aplica resolución DNS.</md>
+          <md>- -Pn: se evita el descubrimiento de hosts.</md>
+      
+        <div class = img-github>
+          <md>![Puertos abiertos en la máquina | center](../assets/img/techSupport/1allPortos.png)</md>
+        </div>
+        
+        <md>Los puertos abiertos se corresponden con los servicios ssh, http y SMB. A
+          continuación, se obtendrán las versiones de los servicios que corren en dichos
+          puertos.</md>
+
+          <md>```
+            nmap -p22,80,139,445 -sCV <IP> -oN versionPorts
+            ```</md>
+          
+            <md>Obteniendo los siguientes resultados (figura [3](../assets/img/techSupport/2VersionPorts.png )):</md>
+        
+            <div class = img-github>
+              <md>![Versiones de los servicios | center](../assets/img/techSupport/2VersionPorts.png)</md>
+            </div>
+
+            <md>Realizando un análisis de las versiones, se encuentra que la empleada por
+              el servicio ssh está desactualizada. Este dato podrı́a ser de utilidad frente a un
+              ataque de enumeración de usuarios.
+              Se realiza consecuentemente el análisis de los puertos 139 y 445. En último
+              lugar, un análisis de la web alojada en el servicio http, que en una primera
+              estancia parece ser la página por defecto de un servidor apache de Ubuntu (fig
+              [4](../assets/img/techSupport/3porto80.png )).</md>
+
+              <div class = img-github>
+                <md>![Página principal| center](../assets/img/techSupport/3porto80.png)</md>
+              </div>
+
+              <md>## Reconocimiento</md>
+              <md>### Puerto 139 y 445</md>
+              <md>El servicio que corre tras estos dos puertos es el denominado como SMB, el
+                cual hace uso compartido de archivos. En este caso, a través de la enumeración
+                se ha descubierto que se trata de una máquina Linux, por lo que en primer lugar,
+                se utilizará la herramienta _enum4linux_, la cual realiza una tarea de enumeración
+                del sistema SMB de la máquina.</md>
+
+              <md>```
+                enum4linux -a <IP>
+                ```</md>
+                <md>Los resultados obtenidos muestran que existe un directorio en el disco que
+                  no cuenta con autenticación (figura [5](../assets/img/techSupport/8enum4linux.png)).</md>
+                
+                  <div class = img-github>
+                    <md>![Página principal| center](../assets/img/techSupport/8enum4linux.png)</md>
+                  </div>
+
+                  <md>Para entrar a dicha localización se emplea la herramienta smbclient. La ejecución de este revela un archivo denominado _enter.txt_ (figura [6](../assets/img/techSupport/9smbclient.png)).</md>
+
+                    <div class = img-github>
+                      <md>![Página principal| center](../assets/img/techSupport/9smbclient.png)</md>
+                    </div>
+
+                    <md>Una vez guardado el archivo en la máquina local, se procede a la visualización
+                      de su contenido, siendo este el mostrado en la siguiente imagen (figura [7](../assets/img/techSupport/10enter.png)).</md>
+
+                      <div class = img-github>
+                        <md>![Página principal| center](../assets/img/techSupport/10enter.png)</md>
+                      </div>
+
+                      <md>De este archivo se consigue un nuevo directorio de la página que se encuentra
+                        utilizando el puerto 80 de la máquina. Además, se aprecia la existencia de Wordpress. En último lugar, aparecen en el archivo las credenciales de administrador
+                        para el panel de _login_ del directorio subrion.</md>
+
+                        <md>### Descifrado de credenciales</md>
+                        <md>En esta sección se mostrará como se han obtenido en texto plano las credenciales que se pueden visualizar en la imagen [7](../assets/img/techSupport/10enter.png). No solo se encuentra el hash
+                          perteneciente a la contraseña del administrador, sino que se indica el algoritmo
+                          de cifrado empleado. Por lo tanto, haciendo uso de la página [Cyberchef](https://gchq.github.io/CyberChef/) y el
+                          algoritmo _Magic_, se obtiene lo siguiente (figura [8](../assets/img/techSupport/12password.png)):</md>
+
+                          <div class = img-github>
+                            <md>![Página principal| center](../assets/img/techSupport/12password.png)</md>
+                          </div>
+                          <md>Una vez obtenida la contraseña, el siguiente paso será realizar el análisis del
+                            servicio _http_.</md>
+                            <md>### Fuzzing</md>
+                            <md>Para comenzar a realizar el análisis del servicio _http_, se realizará una recolección de directorios y ficheros accesibles que guarden relevancia para la resolución
+                              de la máquina. Para lograr esto se ha utilizado la herramienta _ffuf_ y diferentes
+                              diccionarios disponibles en [SecLists](https://github.com/danielmiessler/SecLists).
+                              En primer lugar se realiza el descubrimiento de directorios. Utilizando el
+                              siguiente comando se obtienen los directorios visibles en la imagen [9](../assets/img/techSupport/4ffufDirectorios.png).</md>
+
+                              <md>```
+                                ffuf -w <raft-medium-directories.txt> -u <url>
+                                ```</md>
+
+                              <div class = img-github>
+                                <md>![Página principal| center](../assets/img/techSupport/4ffufDirectorios.png)</md>
+                              </div>
+
+                              <md>Por lo tanto, a estas alturas de la investigación se han encontrado los si-
+                                guientes directorios que posteriormente serán analizados: </md>
+                                <md>- /subrion/panel</md>
+                                <md>- /test/</md>
+                                <md>- /wordpress/</md>
+                                <md>En cuanto a nivel de ficheros se ha podido encontrar _phpinfo.php_, que posee
+                                  importancia en una situación real, pero en esta máquina no es de relevancia.</md>
+                                  <md>### Analísis de directorios</md>
+                                  <md>En esta sección se realizará un análisis sobre los diferentes directorios encon-
+                                    trados, esto es, se aplicará _fuzzing_, se revisará el código fuente en caso de poder
+                                    encontrar algún comentario o ruta que revele información.</md>
+                                    <md>#### Test</md>
+                                    <md>Este directorio ha primera vista se muestra una página de Microsoft sobre
+                                      la que salen diferentes notificaciones de intentos de intrusión (figura [10](../assets/img/techSupport/5test.png)).</md>
+
+                                      <div class = img-github>
+                                        <md>![Página principal| center](../assets/img/techSupport/5test.png)</md>
+                                      </div>
+
+                                      <md>En este directorio no se encuentra nada interesante realizando _fuzzing_ y
+                                        investigación sobre código fuente.</md>
+                                        <md>Wordpress</md>
+                                        <md>El directorio denominado como _wordpress_, muestra inicialmente una página
+                                          de soporte de una compañı́a (figura [11](../assets/img/techSupport/6wordpress.png)). Realizando _fuzzing_ se ha encontrado
+                                          un acceso a _wp-admin_, sobre el cual se podrı́a realizar un ataque de fuerza bruta
+                                          para intentar lograr un inicio de sesión.</md>
+
+                                          <div class = img-github>
+                                            <md>![Página principal| center](../assets/img/techSupport/6wordpress.png)</md>
+                                          </div>
+
+                                          <md>#### Subrion</md>
+                                          <md>Este directorio pertenece al sistema de gestión de contenido (CMS) _Subrion_,
+                                            en este caso con la versión 4.2, obtenida utilizando la herramienta _whatweb_
+                                            (figura [12](../assets/img/techSupport/14subrionVersion.png)).</md>
+
+                                            <div class = img-github>
+                                              <md>![Página principal| center](../assets/img/techSupport/14subrionVersion.png)</md>
+                                            </div>
+
+                                            <md>Anteriormente se habı́a conseguido las credenciales necesarias para acceder
+                                              al panel de administrador, por lo tanto se accede a este (figura [13](../assets/img/techSupport/13panel.png)).</md>
+
+                                              <div class = img-github>
+                                                <md>![Página principal| center](../assets/img/techSupport/13panel.png)</md>
+                                              </div>
+                                              <md>Tras realizar el acceso al panel principal de administración, y ya conociendo
+                                                la versión del software utilizado, el siguiente paso será la detección de posibles
+                                                vulnerabilidades de este. Empleando la herramienta _searchsploit_ se encuentra
+                                                una serie de vulnerabilidades para la versión del software empleado, ası́ como
+                                                de versiones que la preceden.</md>
+
+                                                <md>```
+                                                  searchsploit subrion 4.2
+                                                  ```</md>
+
+                                                <md>En la siguiente figura ([14](../assets/img/techSupport/15searchsploit.png)) se aprecia que una de estas vulnerabilidades explota una subida arbitraria de archivo (_Arbitrary Upload Files_).</md>
+
+                                                  <div class = img-github>
+                                                    <md>![Página principal| center](../assets/img/techSupport/15searchsploit.png)</md>
+                                                  </div>
+
+                                                  <md>Una vez obtenido el script desarrollado en el lenguaje _python_, se abre para
+                                                    entender el funcionamiento de este y poder comprender como se explota la
+                                                    vulnerabilidad. Para recuperar dicho script se ejecuta el comando:</md>
+                                                    <md>```
+                                                      searchsploit -m <name_file>
+                                                      ```</md>
+
+                                                      <md>El siguiente paso será la explotación de la vulnerabilidad para conseguir
+                                                        unha consola que nos permitirá conectarnos al servidor remoto.</md>
+
+                                                        <md>## Explotación</md>
+                                                        <md>En esta sección se mostrarán los pasos seguidos para lograr una conexión
+                                                          con el servidor remoto, la cual permitirá resolver la máquina.
+                                                          En la sección previa se habı́a localizado una vulnerabilidad que permite la
+                                                          subida arbitraria de archivos, y gracias al script recuperado con la herramienta _searchsploit_, se localiza un subdirectorio /_uploads_. Dicho directorio también
+                                                          podrı́a ser encontrado realizando una navegación a través del panel de administración.
+                                                          Tras el hallazgo del nuevo subdirectorio, existen dos vı́as de explotación de
+                                                          la vulnerabilidad. Estas son:</md>
+                                                          <md>- Manualmente</md>
+                                                          <md>- Uso del script proporcionado por _searchsploit_.</md>
+                                                          <md>A continuación, se expondrán ambas vı́as, permitiendo ver como se consigue
+                                                            el acceso al servidor. Se expondrá en primer lugar la forma manual, pero no
+                                                            contará con tanta profundidad como el caso de la utilización del script, aunque
+                                                            el procedimiento posterior a la entrada en el servidor es el mismo en ambos
+                                                            casos.</md>
+                                                            <md>A raı́z de la visualización del archivo de explotación, se crea un archivo que
+                                                              contenga una _reverse shell_ en formato _php_, que para su subida este debe de
+                                                              contener la extensión ._phar_.
+                                                              Dicho archivo se puede descargar de [PentestMonkey](https://github.com/pentestmonkey/php-reverse-shell), editando los campos necesarios para poder conectarse a la máquina local (figura [15](../assets/img/techSupport/25shellphp.png)).</md>
+                                                              <div class = img-github>
+                                                                <md>![Página principal| center](../assets/img/techSupport/25shellphp.png)</md>
+                                                              </div>
+                                                              <md>Una vez creado el archivo se sube en el apartado correspondiente de la url y
+                                                                se pone la máquina local a la escucha con el comando _netcat_.</md>  
+                                                                <md>```
+                                                                  nc -nlvp 4444
+                                                                  ```</md>   
+                                                                  <md>Finalmente, se ejecuta el archivo y se obtiene la reverse shell (figuras [16](../assets/img/techSupport/26Execution.png) y [17](../assets/img/techSupport/27ReverseShell.png)).</md>
+                                                                  <div class = img-github>
+                                                                    <md>![Página principal| center](../assets/img/techSupport/26Execution.png)</md>
+                                                                  </div>        
+                                                                  <div class = img-github>
+                                                                    <md>![Página principal| center](../assets/img/techSupport/27ReverseShell.png)</md>
+                                                                  </div>
+                                                                  
+                                                                  <md>### Ejecución de script</md>
+                                                                  <md>La segunda técnica será la utilización del script previamente descargado al
+                                                                    equipo. Para la ejecución de este se deberá indicar la dirección objetivo, ası́
+                                                                    como el usuario y contraseña del administrador (figura [18](../assets/img/techSupport/16ScriptRce.png)).</md>
+                                                                    <div class = img-github>
+                                                                      <md>![Página principal| center](../assets/img/techSupport/16ScriptRce.png)</md>
+                                                                    </div>
+                                                                    <md>Tras la ejecución del script se obtiene una _reverse shell_, la cual nos indica
+                                                                      que se tiene acceso al servidor remoto. Este script crea un archivo de nombre
+                                                                      aleatorio y con extensión ._phar_ que será almacenado en el subdirectorio /_uploads_
+                                                                      (figura [19](../assets/img/techSupport/17executeScript.png)).</md>
+                                                                      <div class = img-github>
+                                                                        <md>![Página principal| center](../assets/img/techSupport/17executeScript.png)</md>
+                                                                      </div>
+                                                                      <md>Una vez dentro del servidor remoto, se navega al directorio /_home_ de la
+                                                                        máquina, lo que permite descubrir el nombre del usuario (_scamsite_), como se
+                                                                        visualiza en la siguiente imagen ([20](../assets/img/techSupport/17.1Username.png)).</md>
+                                                                        <div class = img-github>
+                                                                          <md>![Página principal| center](../assets/img/techSupport/17.1Username.png)</md>
+                                                                        </div>
+                                                                        <md>Tras realizar una investigación para comprobar si existe algún directorio
+                                                                          oculto de interés, se procede a la exploración de los otros directorios principales
+                                                                          encontrados durante el proceso de reconocimiento (test y wordpress).
+                                                                          El primero de estos directorios posee permisos de administrador, por lo que
+                                                                          no es accesible. Mientras tanto, el segundo de estos directorios si permite una
+                                                                          navegación, pudiendo localizar y visualizar archivos de relevancia, como en este caso es _wp-config.php_ (figura [21](../assets/img/techSupport/18credswordpress.png)). Es en este archivo donde se localiza una contraseña que será utilizada para realizar una conexión a través del servicio _ssh_.
+                                                                          </md>
+
+                                                                          <div class = img-github>
+                                                                            <md>![Página principal| center](../assets/img/techSupport/18credswordpress.png)</md>
+                                                                          </div>
+                                                                          <md>#### Conexión SSH</md>
+                                                                          <md>Tras la ejecución del script se obtienen un usuario y una contraseña, por lo
+                                                                            que el siguiente paso será el intento de conexión a través del servicio _ssh_.</md>
+                                                                            <md>```
+                                                                              ssh scamsite@<IP>
+                                                                              ```</md>
+                                                                              <md>Al introducir la contraseña, el sistema proporcionará acceso al servidor como
+                                                                                el usuario indicado (figura [22](../assets/img/techSupport/19ssh.png)).</md>
+
+                                                                                <div class = img-github>
+                                                                                  <md>![Página principal| center](../assets/img/techSupport/19ssh.png)</md>
+                                                                                </div>
+                                                                                <md>En esta máquina no se establece ninguna _flag_ de usuario, y no existe ningún
+                                                                                  archivo de interés en ningún directorio, por lo tanto, se realizará una investiga-
+                                                                                  ción sobre como conseguir los privilegios necesarios para poder conseguir la _flag_
+                                                                                  necesaria.
+                                                                                  En primer lugar, se consigue la versión de kernel que utiliza la máquina. En
+                                                                                  este caso, la versión empleada es vulnerable a una escalada local de privilegios
+                                                                                  (figura [23]((../assets/img/techSupport/20KernelExplotation.png)), pero no se podrá ejecutar el exploit correspondiente puesto que no
+                                                                                  se conseguirá el objetivo por falta de dependencias.</md>
+                                                                                  <div class = img-github>
+                                                                                    <md>![Página principal| center](../assets/img/techSupport/20KernelExplotation.png)</md>
+                                                                                  </div>
+                                                                                <md>A continuación, se listan los permisos del usuario, mostrando ası́, que existe
+                                                                                  un comando como superusuario sin ninguna contraseña (figura [24](../assets/img/techSupport/22permisos.png)). Este comando será _iconv_ y no permitirá realizar unha escalada de privilegios, sino que como se verá, permite realizar la lectura de archivos con permisos de superusuario.</md>
+                                                                                  <div class = img-github>
+                                                                                    <md>![Página principal| center](../assets/img/techSupport/22permisos.png)</md>
+                                                                                  </div>
+                                                                                  <md>Para lograr realizar la ejecución, se visita la página [GTFOBins](https://gtfobins.github.io/), que mostrará el proceso necesario para poder conseguir ejecutar el comando realizando un
+                                                                                    _bypass_ de las restricciones de seguridad (figura [25](i../assets/img/techSupportmg/23gtfobins.png)).</md>
+                                                                                    <div class = img-github>
+                                                                                      <md>![Página principal| center](../assets/img/techSupport/23gtfobins.png)</md>
+                                                                                    </div>
+                                                                                    <md>Finalmente, ejecutando el siguiente comando se conseguirá recuperar la _flag_ de _root_, como se muestra en la última figura del documento (figura [26](../assets/img/techSupport/24RootFlag.png)).</md>
+                                                                                    <md>```
+                                                                                      LFILE=/root/root.txt
+                                                                                      # 8859_1: indica que los caracteres es ISO 8859-1
+                                                                                      sudo iconv -f 8859_1 -t 8859_1 "\$LFILE"
+                                                                                      ```</md>
+                                                                                      <div class = img-github>
+                                                                                        <md>![Página principal| center](../assets/img/techSupport/24RootFlag.png)</md>
+                                                                                      </div>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
+</body>
+</html>

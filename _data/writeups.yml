@@ -1,0 +1,16 @@
+# > name: Name of CTF webpage
+# > logo: 
+# > username:
+# > url: https://tryhackme.com/p/v1d4l
+
+- name: TryHackMe
+  logo: tryHackMe.png
+  username: v1d4l
+  url: https://tryhackme.com/p/v1d4l
+  side: l
+
+- name: Hack The Box
+  logo: hackthebox-logo.png
+  username: br1go
+  url: https://app.hackthebox.com/profile/362589
+  side: r
