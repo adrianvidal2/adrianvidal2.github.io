@@ -1,2 +1,12 @@
-<h1 class="title">{{site.about_me_title}}</h1>
-<p class="description" data-aos="fade-down">{{site.about_me_description}}</p>
+<!-- <h1 class="title">{{site.about_me_title}}</h1>
+<p class="description" data-aos="fade-down">{{site.about_me_description}}</p> -->
+<!-- Codigo de section_about.me.html -->
+
+<div class="about-card">
+    {% if site.show_aboutme_card %}
+        <img src="/assets/img/avatar.png" alt="Tu Fotografía" class="card-image" data-aos="fade-down">
+        <h1 class="title">{{ site.about_me_title }}</h1>
+        <p class="description" data-aos="fade-down">{{ site.about_me_description }}</p>
+        
+    {% endif %}
+</div>

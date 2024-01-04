@@ -106,6 +106,50 @@ a {
   text-align: justify;
 }
 
+.card-image {
+  width: 150px; /* Ajusta el ancho según sea necesario */
+  height: 150px; /* Ajusta la altura según sea necesario */
+  border-radius: 50%; /* Para hacer la imagen redonda, ajusta según sea necesario */
+  margin-right: 20px; /* Espacio entre la imagen y el contenido de la tarjeta */
+}
+
+.company-image {
+  float: right;
+  width: 30%;
+  margin-top: 15px;
+  margin-left: 50px;
+}
+
+.company-image-left {
+  float: left;
+  width: 30%;
+  margin-top: 15px;
+  margin-left: -50px;
+}
+
+.charge-text{
+  float: left;
+  width: 50%;
+  margin-top: 30px;
+}
+.company-text {
+  float: left;
+  width: 50%;
+  margin-top: 2px;
+  font-size: small;
+}
+
+.charge-text-left{
+  float: right;
+  width: 50%;
+  margin-top: 30px;
+}
+.company-text-left {
+  float: right;
+  width: 50%;
+  margin-top: 2px;
+  font-size: small;
+}
 .neumorphism-button {
   background: linear-gradient(
     145deg,
@@ -132,8 +176,218 @@ a {
     inset -2px -2px 4px rgba(99, 99, 99, 1);
 }
 
+.certification-box {
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  border: 4px solid #555;
+  box-shadow: none;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.certification-box img{
+  max-width: 100px;
+  border-radius: 20%;
+  margin-right: 10px;
+}
+
+.certification-box .content,
+.writeup-box .content,
+.info-box .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.certification_title,
+.writeup_title, 
+.info-box title{
+  margin-top: -20px;
+}
+
+.ca {
+  margin-top: 0;
+  font-size: small;
+}
+
+.certification-date{
+  margin-top: 50px;
+  margin-left: auto;
+}
+
+.writeup-box-container {
+  display: flex;
+  justify-content: center; /* Centra las cajas horizontalmente */
+  align-items: center; /* Centra las cajas verticalmente */
+}
+
+.writeup-box img {
+  max-width: 150px;
+  border-radius: 20%;
+  margin-right: 10px;
+}
+.writeup-box {
+  display: flex;
+  align-items: center; /* Centra los elementos verticalmente */
+  border-radius: 15px;
+  box-shadow: none;
+  padding: 10px;
+  margin: 0 30px; /* Agrega margen a cada lado de la caja */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
+
+.writeup-box:last-child {
+  margin-left: 5; /* Elimina el margen derecho en la última caja */
+}
+
 .neumorphism-card-big {
   box-shadow: 5px 5px 4px #161718, -5px -5px 4px #404346;
+}
+
+.writeup-card-big {
+  box-shadow: 5px 5px 4px #161718, -5px -5px 4px #404346;
+}
+
+.thm {
+  max-width:300px;
+  border-radius: 20%;
+  margin-right: 10px;
+}
+
+
+// .info-box {
+//   display: flex;
+//   align-items: center;
+//   box-shadow: none;
+//   padding: 10px;
+//   margin-bottom: 10px;
+// }
+
+.info-box img {
+  max-width: 125px;
+  border-radius: 20%;
+  margin-right: 10px;
+}
+
+.info-box h2{
+  display: flex;
+}
+
+.info-box span{
+  display: flex;
+  font-size: 13px;
+  margin-top: -12px;
+}
+
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  position: relative; /* Añade un posicionamiento relativo al contenedor */
+}
+
+.info-box .level {
+  position: absolute;
+  bottom: 0; /* Coloca el elemento en la parte inferior del contenedor */
+  right: 0; /* Coloca el elemento en la esquina derecha del contenedor */
+  font-size: 13px;
+  margin: 0; /* Elimina márgenes anteriores para una posición precisa */
+}
+
+
+.info-box .tag {
+  border-radius: 0.5rem;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem;
+}
+
+.info-box-card {
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 4px rgba(99, 99, 99, 0.3);
+}
+
+.infobox-card-big {
+  box-shadow: 5px 5px 4px #161718, -5px -5px 4px #404346;
+}
+
+.info-box a {
+  color: inherit; /* Esto heredará el color del texto de su elemento padre */
+  text-decoration: none;
+}
+
+.card.infobox-card-big:hover {
+  /* Estilos cuando se pasa el ratón por encima */
+  background-color: rgba(0, 0, 0, 0.1); /* Color semi-transparente para oscurecer */
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  /* Otros estilos */
+}
+
+/* Estilo para el botón */
+.info-box-button {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  color: #fff; /* Asegura que el texto sea blanco */
+  text-decoration: none; /* Elimina cualquier subrayado del texto dentro del botón */
+}
+
+body .github {
+  color: white;
+}
+
+.img-github {
+  text-align: center;
+}
+
+.menu-toggle {
+  cursor: pointer;
+  padding: 10px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+}
+
+.bar {
+  width: 30px;
+  height: 3px;
+  background-color: #ff0000;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.menu {
+  display: none;
+  position: fixed;
+  top: 60px; 
+  left: 0;
+  height: 100%;
+  width: 10%; 
+  background-color: rgba(51, 51, 51, 0.9);
+  border-right: 2px solid #ff0000;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.menu a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.menu a:hover {
+  color: #ff0000; /* Cambia el color al pasar el ratón sobre la opción */
+}
+
+.menu-open {
+  margin-left: 0;
 }
 
 /* Preloader */
@@ -539,8 +793,7 @@ a {
   .time-wrapper {
     color: $text-color;
     display: block;
-    line-height: 0.5rem;
-    margin-top: 0.3rem;
+    margin-top: 10px;
   }
 
   .time {
@@ -647,6 +900,8 @@ a {
     }
   }
 }
+
+
 
 /* Media Queries */
 
@@ -777,8 +1032,8 @@ a {
       }
 
       .time-wrapper {
-        float: left;
-        margin-top: -0.1rem;
+        float: right;
+        margin-top: 10px;
       }
 
       .desc {
@@ -803,8 +1058,8 @@ a {
       }
 
       .time-wrapper {
-        float: right;
-        margin-top: -0.1rem;
+        float: left;
+        margin-top: 10px;
       }
 
       .desc {

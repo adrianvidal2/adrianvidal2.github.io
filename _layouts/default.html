@@ -30,6 +30,7 @@
       <hr />
     </div>
   </div>
+  {% include menu.html %}
   {% include landing-page.html %}
   <div class="layout">
     {%if site.show_aboutme_card %}
@@ -47,17 +48,27 @@
         {% include section-timeline.html %}
       </section>
     {% endif %}
+    {%if site.show_certification_card %}
+      <section class="card neumorphism-card-big">
+        {%include section-certifications.html %}
+      </section>
+    {% endif %}
+    {%if site.show_writeup_card %}
+      <section class="card neumorphism-card-big">
+        {%include section-writeups.html %}
+      </section>
+    {% endif %}
     {%if site.show_projects_card %}
       <section class="card neumorphism-card-big">
         {% include section-projects.html %}
       </section>
     {% endif %}
     {%if site.show_contact_card %}
-    <section class="card neumorphism-card-big">
-      {% include section-contact.html %}
-    </section>
+      <section class="card neumorphism-card-big">
+        {% include section-contact.html %}
+      </section>
     {% endif %}
+    {% include footer.html %}
   </div>
-  {% include footer.html %}
 </body>
 </html>
