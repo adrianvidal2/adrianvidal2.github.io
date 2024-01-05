@@ -127,6 +127,7 @@ a {
 }
 
 .charge-text{
+  font-size: medium;
   float: left;
   width: 100%;
   margin-top: 5px;
@@ -139,6 +140,7 @@ a {
 }
 
 .charge-text-left{
+  font-size: medium;
   float: right;
   width: 100%;
   margin-top: 5px;
@@ -926,21 +928,6 @@ body .github {
       border-radius: 10%;
       margin-right: 5px;
     }
-
-
-    .charge-text{
-      font-size: 1.5rem
-    }
-    .company-text {
-      font-size: small;
-    }
-    
-    .charge-text-left{
-      font-size: 1.5rem;
-    }
-    .company-text-left {
-      font-size: small;
-    }
   }
 
   #skills {
@@ -1113,7 +1100,7 @@ body .github {
 
   .timeline-wrapper {
     .timeline {
-      width: 55rem;
+      width: 49rem;
     }
 
     .direction-l {
