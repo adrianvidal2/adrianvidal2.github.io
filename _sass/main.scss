@@ -710,6 +710,7 @@ body .github {
 
   .timeline li {
     padding: 1rem 0;
+    margin-bottom: 50px;
   }
 
 
@@ -930,6 +931,10 @@ body .github {
       border-radius: 10%;
       margin-right: 5px;
     }
+
+    .timeline li {
+      padding: 1rem 0;
+    }
   }
 
   #skills {
@@ -1104,9 +1109,6 @@ body .github {
     .timeline {
       width: 49rem;
     }
-    .timeline li{
-      margin-bottom: 50px;
-    }
 
     .direction-l {
       width: 23.35rem;
@@ -1115,13 +1117,16 @@ body .github {
     .direction-r {
       width: 23.35rem;
     }
-  
   }
 
   .projects-wrapper {
     > * {
       width: 45%;
     }
+  }
+
+  .timeline li {
+    padding: 1rem 0;
   }
 }
 
@@ -1152,6 +1157,10 @@ body .github {
     > * {
       width: 46%;
     }
+  }
+
+  .timeline li {
+    padding: 1rem 0;
   }
 }
 
