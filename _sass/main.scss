@@ -710,7 +710,6 @@ body .github {
 
   .timeline li {
     padding: 1rem 0;
-    margin-bottom: 50px;
   }
 
 
@@ -1149,6 +1148,10 @@ body .github {
     > * {
       width: 46%;
     }
+  }
+
+  .timeline li{
+    margin-bottom: 50px;
   }
 }
 
