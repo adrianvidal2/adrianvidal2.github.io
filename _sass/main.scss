@@ -225,7 +225,7 @@ a {
 .writeup-box img {
   max-width: 100px;
   border-radius: 20%;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .writeup-box {
   display: flex;
@@ -1143,6 +1143,12 @@ body .github {
     > * {
       width: 46%;
     }
+  }
+
+  .writeup-box img {
+    max-width: 175px;
+    border-radius: 20%;
+    margin-right: 10px;
   }
 }
 
