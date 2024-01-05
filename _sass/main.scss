@@ -106,10 +106,10 @@ a {
 }
 
 .card-image {
-  width: 150px; /* Ajusta el ancho según sea necesario */
-  height: 150px; /* Ajusta la altura según sea necesario */
-  border-radius: 50%; /* Para hacer la imagen redonda, ajusta según sea necesario */
-  margin-right: 20px; /* Espacio entre la imagen y el contenido de la tarjeta */
+  width: 150px;
+  height: 150px; 
+  border-radius: 50%; 
+  margin-right: 20px; 
 }
 
 .company-image {
@@ -216,8 +216,8 @@ a {
 
 .writeup-box-container {
   display: flex;
-  justify-content: center; /* Centra las cajas horizontalmente */
-  align-items: center; /* Centra las cajas verticalmente */
+  justify-content: center; 
+  align-items: center; 
 }
 
 .writeup-box img {
@@ -227,16 +227,16 @@ a {
 }
 .writeup-box {
   display: flex;
-  align-items: center; /* Centra los elementos verticalmente */
+  align-items: center;
   border-radius: 15px;
   box-shadow: none;
   padding: 10px;
-  margin: 0 30px; /* Agrega margen a cada lado de la caja */
-  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  margin: 0 30px; 
+  box-sizing: border-box;
 }
 
 .writeup-box:last-child {
-  margin-left: 5; /* Elimina el margen derecho en la última caja */
+  margin-left: 5;
 }
 
 .neumorphism-card-big {
@@ -252,15 +252,6 @@ a {
   border-radius: 20%;
   margin-right: 10px;
 }
-
-
-// .info-box {
-//   display: flex;
-//   align-items: center;
-//   box-shadow: none;
-//   padding: 10px;
-//   margin-bottom: 10px;
-// }
 
 .info-box img {
   max-width: 125px;
@@ -281,15 +272,15 @@ a {
 .info-box {
   display: flex;
   align-items: flex-start;
-  position: relative; /* Añade un posicionamiento relativo al contenedor */
+  position: relative; 
 }
 
 .info-box .level {
   position: absolute;
-  bottom: 0; /* Coloca el elemento en la parte inferior del contenedor */
-  right: 0; /* Coloca el elemento en la esquina derecha del contenedor */
+  bottom: 0; 
+  right: 0; 
   font-size: 13px;
-  margin: 0; /* Elimina márgenes anteriores para una posición precisa */
+  margin: 0; 
 }
 
 
@@ -310,13 +301,12 @@ a {
 }
 
 .info-box a {
-  color: inherit; /* Esto heredará el color del texto de su elemento padre */
+  color: inherit; 
   text-decoration: none;
 }
 
 .card.infobox-card-big:hover {
-  /* Estilos cuando se pasa el ratón por encima */
-  background-color: rgba(0, 0, 0, 0.1); /* Color semi-transparente para oscurecer */
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
   /* Otros estilos */
 }
@@ -329,8 +319,8 @@ a {
   cursor: pointer;
   padding: 0;
   margin: 0;
-  color: #fff; /* Asegura que el texto sea blanco */
-  text-decoration: none; /* Elimina cualquier subrayado del texto dentro del botón */
+  color: #fff; 
+  text-decoration: none; 
 }
 
 body .github {
@@ -382,7 +372,7 @@ body .github {
 }
 
 .menu a:hover {
-  color: #ff0000; /* Cambia el color al pasar el ratón sobre la opción */
+  color: #ff0000;
 }
 
 .menu-open {
@@ -1102,7 +1092,7 @@ body .github {
 
   .timeline-wrapper {
     .timeline {
-      width: 49rem;
+      width: 55rem;
     }
 
     .direction-l {
