@@ -128,20 +128,20 @@ a {
 
 .charge-text{
   float: left;
-  width: 50%;
-  margin-top: 30px;
+  width: 100%;
+  margin-top: 5px;
 }
 .company-text {
   float: left;
-  width: 50%;
-  margin-top: 2px;
+  width: 100%;
+  margin-top: 5px;
   font-size: small;
 }
 
 .charge-text-left{
   float: right;
-  width: 50%;
-  margin-top: 30px;
+  width: 100%;
+  margin-top: 5px;
 }
 .company-text-left {
   float: right;
@@ -919,6 +919,12 @@ body .github {
 
     .social {
       font-size: 2rem;
+    }
+
+    .writeup-box img{
+      max-width: 50px;
+      border-radius: 10%;
+      margin-right: 10px;
     }
   }
 
