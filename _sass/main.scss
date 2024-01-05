@@ -710,6 +710,7 @@ body .github {
 
   .timeline li {
     padding: 1rem 0;
+    margin-bottom: 50px;
   }
 
 
@@ -914,7 +915,7 @@ body .github {
   .landing-title h1 {
     font-size: 3rem;
   }
-  
+
 
   .landing-icons .social-link {
     width: 4rem;
@@ -929,9 +930,6 @@ body .github {
       max-width: 25px;
       border-radius: 10%;
       margin-right: 5px;
-    }
-    .timeline li{
-      margin-bottom: 50px;
     }
   }
 
