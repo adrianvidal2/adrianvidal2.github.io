@@ -223,9 +223,9 @@ a {
 }
 
 .writeup-box img {
-  max-width: 150px;
+  max-width: 100px;
   border-radius: 20%;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 .writeup-box {
   display: flex;
@@ -925,16 +925,6 @@ body .github {
     .social {
       font-size: 2rem;
     }
-
-    .writeup-box img{
-      max-width: 25px;
-      border-radius: 10%;
-      margin-right: 5px;
-    }
-
-    .timeline li {
-      padding: 1rem 0;
-    }
   }
 
   #skills {
@@ -1124,10 +1114,6 @@ body .github {
       width: 45%;
     }
   }
-
-  .timeline li {
-    padding: 1rem 0;
-  }
 }
 
 @media only screen and (min-width: $large-screen) {
@@ -1157,10 +1143,6 @@ body .github {
     > * {
       width: 46%;
     }
-  }
-
-  .timeline li {
-    padding: 1rem 0;
   }
 }
 
