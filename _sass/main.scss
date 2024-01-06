@@ -356,7 +356,7 @@ body .github {
   top: 60px; 
   left: 0;
   height: 100%;
-  width: 10%; 
+  width: 30%; 
   background-color: rgba(51, 51, 51, 0.9);
   border-right: 2px solid #ff0000;
   padding: 10px;
@@ -1149,6 +1149,10 @@ body .github {
     max-width: 175px;
     border-radius: 20%;
     margin-right: 10px;
+  }
+
+  .menu {
+    width: 10%; 
   }
 }
 
