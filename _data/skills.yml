@@ -10,7 +10,7 @@
   items: [Python, TypeScript, Java, C, Bash, JavaScript, C++]
 
 - title: AI & LLMs
-  items: [LangChain, PyTorch, HuggingFace, vLLM, Unsloth, scikit-learn, MCP]
+  items: [LangChain, PyTorch, HuggingFace, vLLM, llama.cpp, Unsloth, scikit-learn, MCP]
 
 - title: Cloud & DevOps
   items: [Docker, Kubernetes, Git, Elasticsearch, Azure, GCP, AWS]
