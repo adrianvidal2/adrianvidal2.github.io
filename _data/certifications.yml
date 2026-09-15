@@ -2,6 +2,36 @@
 # > ca: certificate issuer
 # > ca-url: web of ca
 # > date: date of expedition
+# > date-finish: end date (optional, for degrees in progress or ranges)
+# > credential-url: public URL to verify the credential (optional)
+
+- name: Master's Degree in Cybersecurity
+  ca: Universidad Nacional de Educación a Distancia
+  ca-url: https://www.uned.es/universidad/inicio.html
+  date: Sep 2025
+  date-finish: Sep 2026
+  logo: unedLogo.png
+
+- name: Certified Professional Penetration Tester
+  ca: INE
+  ca-url: https://ine.com/
+  date: Feb 2025
+  credential-url: https://certs.ine.com/5c9c0a86-fd07-4119-8080-d06541a04cb0
+  logo: ineLogo.svg
+
+- name: Cryptography I
+  ca: Coursera
+  ca-url: https://www.coursera.org/
+  date: Dec 2023
+  credential-url: https://www.coursera.org/verify/L2SZTMGW4W7W
+  logo: courseraLogo.svg
+
+- name: Remote Pilot Certificate (A1, A2, A3)
+  ca: Agencia Estatal de Seguridad Aérea
+  ca-url: https://www.seguridadaerea.gob.es/
+  date: June 2022
+  date-finish:
+  logo: aesaLogo.png
 
 - name: Degree in Computer Engineering
   ca: Universidade de Santiago de Compostela
@@ -16,13 +46,6 @@
   date: Sep 2018
   date-finish: June 2019
   logo: unedLogo.png
-
-- name: Remote Pilot Certificate (A1, A2, A3)
-  ca: Agencia Estatal de Seguridad Aérea
-  ca-url: https://www.seguridadaerea.gob.es/
-  date: June 2022
-  date-finish: 
-  logo: aesaLogo.png
 
 - name: B1 Preliminary
   ca: Cambridge University

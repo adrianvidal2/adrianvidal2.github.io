@@ -9,6 +9,9 @@
             <a href="{{event.ca-url}}">
                 <span class="ca">{{event.ca}}</span>
             </a>
+            {% if event.credential-url %}
+                <a class="credential-link highlight-link" href="{{event.credential-url}}" target="_blank" rel="noreferrer">Show credential</a>
+            {% endif %}
         </div>
 
         {% if event.date-finish %} 

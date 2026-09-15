@@ -3,22 +3,30 @@
   <div class="projects-wrapper">
     {% for project in site.data.projects %}
       <div class="project neumorphism-card" data-aos="zoom-in-down">
-        <div class="name-link-wrapper">
-          <h3>{{project.name}}</h3>
-        </div>
+        <h3>{{project.name}}</h3>
         <p class="project-desc">{{project.descr}}</p>
-        {% if project.demo %}
-          <a class="highlight-link" href="{{project.demo}}" target="_blank" rel="noreferrer">
-            Demo
-          </a>
-        {% endif %}
         {% if project.tags %}
           <div class="tag-wrapper">
             {% for tag in project.tags %}
-              <span class="tag neumorphism-card">{{tag.tag}}</span>
+              <span class="tag">{{tag.tag}}</span>
             {% endfor %}
           </div>
         {% endif %}
+        <div class="project-links">
+          {% if project.github %}
+            <a class="project-github-btn" href="{{project.github}}" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 48 48" aria-hidden="true">
+                <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="{{ "/assets/img/brands.svg#github" | prepend: site.baseurl }}"></use>
+              </svg>
+              GitHub
+            </a>
+          {% endif %}
+          {% if project.demo %}
+            <a class="project-demo-btn" href="{{project.demo}}" target="_blank" rel="noreferrer">
+              Demo
+            </a>
+          {% endif %}
+        </div>
       </div>
     {% endfor %}
   </div>

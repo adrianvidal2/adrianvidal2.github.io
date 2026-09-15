@@ -104,6 +104,22 @@
         </a>
       {% endif %}
 
+      {% if site.yeswehack_url %}
+        <a class="social-link yeswehack" aria-label="My YesWeHack" target="_blank" rel="noreferrer"
+          href="{{site.yeswehack_url}}"
+        >
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="{{ "/assets/img/brands.svg#yeswehack" | prepend: site.baseurl }}"></use>
+            </svg>
+          </div>
+          <span class="label">YesWeHack</span>
+        </a>
+      {% endif %}
+
       {% if site.briefcase_username != null %}
         <a class="social-link cv" aria-label="My CV" target="_blank"
           rel="noreferrer" href="https://europa.eu/europass/eportfolio/api/eprofile/shared-profile/adri%C3%A1n-vidal+lorenzo/3a317140-2be8-44b3-ae06-ae834a5c7e98?view=html"

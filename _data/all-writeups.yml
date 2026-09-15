@@ -1,8 +1,14 @@
+# > name: Name of the machine / room
+# > difficulty: difficulty badge (Easy, Medium, Hard...)
+# > description: short teaser of the box
+# > page: filename inside pages/ if a full writeup exists (optional)
+# > tags: techniques used
+# > web: platform (thm / htb)
+
 - name: 0 day
   difficulty: Medium
   description: This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box.
-  logo: turtle.png
-  template_name: 0day
+  page: writeup_0day.html
   tags:
     - tag: CVE
     - tag: kernel exploit
@@ -13,8 +19,7 @@
 - name: Brooklyn Nine Nine
   difficulty: Easy
   description: This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box.
-  logo: brooklyn.png
-  template_name: brooklynNineNine
+  page: writeup_brooklynNineNine.html
   tags:
     - tag: security
     - tag: nmap
@@ -25,8 +30,7 @@
 - name: Tech_Supp0rt:1
   difficulty: Easy
   description: Hack into the scammer's under-development website to foil their plans.
-  logo: techLogo.png
-  template_name: techSupport
+  page: writeup_techSupport.html
   tags:
     - tag: RCE
     - tag: file upload
@@ -36,8 +40,11 @@
 
 - name: Bashed
   difficulty: Easy
-  logo: bashedLogo.png
-  template_name: bashed
-  OS: Linux
+  description: Linux box where an already-deployed php web shell is the way in, and a cron job reveals the path to root.
+  page: writeup_bashed.html
+  tags:
+    - tag: web shell
+    - tag: cron
+    - tag: enumeration
+    - tag: Linux
   web: htb
-

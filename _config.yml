@@ -25,6 +25,9 @@ linkedin_username: adrianvidallorenzo
 twitter_username: 2AdriVidal
 briefcase_username: cv-adrianvidal
 question_username: adrianvidallorenzo
+# yeswehack_url: Full URL of your public YesWeHack profile
+# > set this to your public profile URL on YesWeHack
+yeswehack_url: "https://yeswehack.com/hunters/brigogz"
 
 
 # ABOUT ME SECTION
@@ -35,7 +38,20 @@ show_aboutme_card: true
 # about_me_title: The will be displayed as the title in the About Me section
 about_me_title: Who am I?
 # about_me_description: This will be displayed under the title.
-about_me_description: Hi! My name is Adrian Vidal Lorenzo. I am Engineer-Researcher with a degree in Computer Engineer from the University of Santiago de Compostela. My main interests include everything related to the field of cibersecurity and system administration.
+# > HTML is allowed: <br><br> for paragraphs, <strong> for highlights
+about_me_description: >-
+  Hi! I'm Adrian Vidal Lorenzo, a <strong>Cybersecurity Consultant</strong> with professional experience leading
+  comprehensive security audits — internal and external pentesting — and designing strategic enterprise
+  defense solutions. I specialize in building custom security tools end-to-end: from OSINT systems and
+  data-leak monitoring to SIEM platforms like Wazuh.<br><br>
+  Beyond consulting, I hunt real-world vulnerabilities as a <strong>bug bounty hunter</strong> on
+  platforms like YesWeHack, where responsible disclosure keeps my offensive skills sharp against
+  production targets.<br><br>
+  Right now, my work lives at the intersection of cybersecurity and <strong>AI</strong>: deploying AI
+  agents powered by local models and multi-provider APIs, fine-tuning LLMs for specialized behaviors,
+  and developing proprietary multi-agent ecosystems and MCP servers. Passionate about robotics and
+  innovation, my ultimate goal is to build resilient, next-generation autonomous systems and
+  secure-by-design AI architectures.
 
 # SKILLS SECTION
 # show_skills_card:
@@ -77,11 +93,11 @@ writeup_title: Writeups
 # show_projects_card:
 # > setting this to true, will display the Projects section
 # > setting this to false, will omit the Projects section
-show_projects_card: false
+show_projects_card: true
 # show_projects:
 # > setting this to true, will display your listed projects in _data/projects.yml
 # > setting this to false, will omit your listed projects
-show_projects: false
+show_projects: true
 # projects_title: The will be displayed as the title of your projects
 projects_title: Projects
 # show_os_projects:

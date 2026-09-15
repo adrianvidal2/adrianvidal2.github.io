@@ -22,6 +22,7 @@
 </head>
 
 <body>
+  <div class="scroll-progress" id="scroll-progress"></div>
   <div id="preloader">
     <div class="load">
       <hr />
@@ -34,7 +35,7 @@
   {% include landing-page.html %}
   <div class="layout">
     {%if site.show_aboutme_card %}
-      <section class="card neumorphism-card-big">
+      <section id="about" class="card neumorphism-card-big">
         {% include section-aboutme.html %}
       </section>
     {% endif %}
@@ -44,23 +45,23 @@
       </section>
     {% endif %}
     {%if site.show_timeline_card %}
-      <section class="card neumorphism-card-big">
+      <section id="experience" class="card neumorphism-card-big">
         {% include section-timeline.html %}
       </section>
     {% endif %}
     {%if site.show_certification_card %}
-      <section class="card neumorphism-card-big">
+      <section id="education" class="card neumorphism-card-big">
         {%include section-certifications.html %}
       </section>
     {% endif %}
-    {%if site.show_writeup_card %}
-      <section class="card neumorphism-card-big">
-        {%include section-writeups.html %}
+    {%if site.show_projects_card %}
+      <section id="projects" class="card neumorphism-card-big">
+        {% include section-projects.html %}
       </section>
     {% endif %}
-    {%if site.show_projects_card %}
-      <section class="card neumorphism-card-big">
-        {% include section-projects.html %}
+    {%if site.show_writeup_card %}
+      <section id="writeups" class="card neumorphism-card-big">
+        {%include section-writeups.html %}
       </section>
     {% endif %}
     {%if site.show_contact_card %}

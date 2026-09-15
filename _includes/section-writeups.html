@@ -1,19 +1,34 @@
-<h1 class="title"> {{site.writeup_title}}</h1>
-<div class="writeup-box-container">
-    {% for event in site.data.writeups %}
-        {% if event.side == 'l' %}
-            <div class="writeup-box" data-aos="zoom-in-right">
-                <a href="/pages/writeups-thm.html">
-                    <img src="/assets/img/{{event.logo}}">
-                </a>
-            </div>
+<h1 class="title">{{ site.writeup_title }}</h1>
+<p class="subtitle">
+  Hunting on
+  {% for p in site.data.writeups %}
+    <a class="highlight-link" href="{{ p.url }}" target="_blank" rel="noreferrer">{{ p.name }}</a>{% unless forloop.last %} ·{% endunless %}
+  {% endfor %}
+</p>
+
+<div class="projects-wrapper">
+  {% for w in site.data.all-writeups %}
+    <div class="writeup-card neumorphism-card" data-aos="zoom-in-down">
+      <div class="writeup-card-head">
+        <h3>{{ w.name }}</h3>
+        {% if w.difficulty %}
+          <span class="diff-badge diff-{{ w.difficulty | downcase }}">{{ w.difficulty }}</span>
         {% endif %}
-        {% if event.side == 'r' %}
-            <div class="writeup-box" data-aos="zoom-in-left">
-                <a href="/pages/writeups-htb.html">
-                    <img src="/assets/img/{{event.logo}}">
-                </a>
-            </div>
+      </div>
+      <p class="project-desc">{{ w.description }}</p>
+      {% if w.tags %}
+        <div class="tag-wrapper">
+          {% for tag in w.tags %}
+            <span class="tag">{{ tag.tag }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <div class="project-links">
+        <span class="writeup-platform">{{ w.web | upcase }}</span>
+        {% if w.page %}
+          <a class="project-github-btn" href="/pages/{{ w.page }}">leer writeup →</a>
         {% endif %}
-    {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
 </div>

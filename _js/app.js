@@ -127,3 +127,26 @@ function toggleMenu() {
   menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
 }
 
+
+/* Reading progress bar */
+(function () {
+  function initProgress() {
+    var bar = document.getElementById('scroll-progress');
+    if (!bar) return;
+    function updateBar() {
+      var de = document.documentElement;
+      var max = de.scrollHeight - de.clientHeight;
+      var current = window.scrollY || de.scrollTop || document.body.scrollTop || 0;
+      var pct = max > 0 ? current / max : 0;
+      bar.style.width = (pct * 100) + '%';
+    }
+    window.addEventListener('scroll', updateBar, { passive: true });
+    window.addEventListener('resize', updateBar);
+    updateBar();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgress);
+  } else {
+    initProgress();
+  }
+})();
