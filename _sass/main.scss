@@ -1618,3 +1618,51 @@ body::before {
   }
 }
 
+
+/* Mobile fixes */
+
+@media only screen and (max-width: 48em) {
+  .layout .card .description,
+  .layout .card .subtitle {
+    text-align: left;
+    word-spacing: normal;
+  }
+
+  .certification-box {
+    flex-wrap: wrap;
+  }
+
+  .certification-date {
+    width: 100%;
+    margin: 0.35rem 0 0;
+    text-align: right;
+  }
+}
+
+@media only screen and (max-width: 48em) {
+  .certification-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .certification-box img {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+    max-width: 90px;
+    max-height: 70px;
+  }
+
+  .certification-box .content {
+    width: 100%;
+    margin-top: 0.4rem;
+  }
+
+  .certification-box .credential-link {
+    display: inline-block;
+  }
+
+  .certification-date {
+    margin: 0.5rem 0 0;
+  }
+}
