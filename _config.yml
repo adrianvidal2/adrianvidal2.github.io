@@ -70,7 +70,7 @@ show_timeline_card: true
 timeline_title: Experience
 # cv_download_link: The link where you host your cv.
 # > e.g. you share your cv on your dropbox, then add the dropbox link here
-cv_download_link: https://europa.eu/europass/eportfolio/api/eprofile/shared-profile/adri%C3%A1n-vidal+lorenzo/3a317140-2be8-44b3-ae06-ae834a5c7e98?view=html
+cv_download_link: "/assets/cv/CV_Adrian_Vidal.pdf"
 
 
 # CERTIFICATION SECTION
