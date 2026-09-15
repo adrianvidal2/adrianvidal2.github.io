@@ -133,7 +133,7 @@ a {
 }
 
 .layout .card .description {
-  text-align: justify;
+  text-align: left;
 }
 
 .card-image {
@@ -913,6 +913,15 @@ body .github {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1.25rem 1.5rem;
+}
+
+.timeline .neumorphism-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.timeline .neumorphism-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .project,
@@ -1703,5 +1712,29 @@ body::before {
 
   .certification-date {
     margin: 0.5rem 0 0;
+  }
+}
+
+/* Mobile menu frosted */
+
+@media only screen and (max-width: 48em) {
+  .menu {
+    background: rgba(43, 45, 47, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 7, 58, 0.3);
+  }
+
+  .menu a {
+    color: $text-color;
+    display: block;
+    padding: 0.7rem 1rem;
+    border-radius: 0.75rem;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      color: $primary-color;
+      background: rgba(255, 7, 58, 0.08);
+    }
   }
 }

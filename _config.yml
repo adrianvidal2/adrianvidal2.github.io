@@ -7,6 +7,7 @@ title: Adrian Vidal Portofolio
 description: Personal Portfolio powered by Jekyll
 # baseurl: The subpath of your site
 # > set this to "", if you renamed the repository to <user>.github.io
+url: "https://adrianvidal2.github.io"
 baseurl: ""
 
 # LANDING PAGE
@@ -14,7 +15,7 @@ baseurl: ""
 username: Adrian Vidal
 # typing_text: This will be typed before 'scroll down for more'.
 # > set this to your job title, e.g. Fullstack Developer
-typing_text: Computer engineer
+typing_text: Cybersecurity Consultant
 # email: Your E-Mail address for the email button.
 email: adrianvidallorenzo@gmail.com
 # For every social button you want to display, set your username or userid
@@ -57,7 +58,7 @@ about_me_description: >-
 # show_skills_card:
 # > setting this to true, will display the Skills section
 # > setting this to false, will omit the Skills section
-show_skills_card: false
+show_skills_card: true
 # about_me_title: The will be displayed as the title in the Skills section
 skills_title: Skills
 

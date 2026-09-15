@@ -14,6 +14,17 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/favicon/favicon-16x16.png" | prepend: site.baseurl }}">
   <link rel="manifest" href="{{ "/assets/favicon/site.webmanifest" | prepend: site.baseurl }}">
 
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/img/og-image.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ site.title }}">
+  <meta name="twitter:description" content="{{ site.description }}">
+  <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/assets/img/og-image.png">
+
   <link rel="stylesheet" href="{{ "/assets/css/main.min.css" | prepend: site.baseurl }}">
   <link rel="stylesheet" href="{{ "/assets/css/vendors.min.css" | prepend: site.baseurl }}">
 
