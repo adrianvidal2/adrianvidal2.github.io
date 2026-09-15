@@ -1,19 +1,31 @@
 <footer class="footer">
-  <p>
-    &copy; 2020 Designed & Developed by
-    <a class="highlight-link" href="https://longpdo.github.io/" target="_blank" rel="noreferrer">
-      Long Do
+  <div class="footer-social">
+    <a href="mailto:{{ site.email }}" aria-label="Email" target="_blank" rel="noreferrer">
+      <svg viewBox="0 0 48 48"><use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/solid.svg#envelope"></use></svg>
     </a>
+    <a href="https://github.com/{{ site.github_username }}" aria-label="GitHub" target="_blank" rel="noreferrer">
+      <svg viewBox="0 0 48 48"><use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#github"></use></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" aria-label="LinkedIn" target="_blank" rel="noreferrer">
+      <svg viewBox="0 0 48 48"><use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#linkedin-in"></use></svg>
+    </a>
+    <a href="https://twitter.com/{{ site.twitter_username }}" aria-label="Twitter" target="_blank" rel="noreferrer">
+      <svg viewBox="0 0 48 48"><use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/solid.svg#x-twitter"></use></svg>
+    </a>
+    {% if site.yeswehack_url %}
+    <a href="{{ site.yeswehack_url }}" aria-label="YesWeHack" target="_blank" rel="noreferrer">
+      <svg viewBox="0 0 48 48"><use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#yeswehack"></use></svg>
+    </a>
+    {% endif %}
+  </div>
+  <p class="footer-name">
+    &copy; {{ site.time | date: "%Y" }} {{ site.username }}
   </p>
-  <p>
+  <p class="footer-built">
     Built with
-    <a class="highlight-link" href="https://jekyllrb.com/"target="_blank" rel="noreferrer">
-      Jekyll
-    </a>
+    <a class="highlight-link" href="https://jekyllrb.com/" target="_blank" rel="noreferrer">Jekyll</a>
     and powered by
-    <a class="highlight-link" href="https://pages.github.com/" target="_blank" rel="noreferrer">
-      Github Pages
-    </a>
+    <a class="highlight-link" href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>
   </p>
 </footer>
 
